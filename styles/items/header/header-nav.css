@@ -1,0 +1,22 @@
+header nav
+{
+	display: flex;
+	justify-content: space-between;
+
+	margin: 0 25%;
+}
+
+header nav a
+{
+	color: white;
+	text-decoration: none;
+
+	padding: 0 20px;
+}
+
+header nav a:hover
+{
+	color: orange;
+
+	transition: color 0.2s;
+}

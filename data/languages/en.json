@@ -1,0 +1,25 @@
+{
+	"code": "en",
+	"header":
+	{
+		"title": "Film library",
+		"buttons":
+		{
+			"log_in": "Log in",
+			"log_out": "Log Out"
+		},
+		"links":
+		{
+			"add": "Add Film",
+			"library": "Library",
+			"remove": "Remove Film"
+		}
+	},
+	"footer":
+	{
+		"p":
+		{
+			"rights": "2025 &copy All rights reserved"
+		}
+	}
+}

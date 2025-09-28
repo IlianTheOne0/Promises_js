@@ -1,0 +1,16 @@
+@import "./header-nav.css";
+@import "./header-buttons.css";
+
+header
+{
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	padding: 10px;
+
+	background-color: #858585;
+	color: white;
+}

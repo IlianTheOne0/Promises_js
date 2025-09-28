@@ -1,0 +1,28 @@
+{
+	"code": "pl",
+	"header":
+	{
+		"title": "Biblioteka filmowa",
+		"buttons":
+		{
+			"first_language": "UA",
+			"second_language": "EN",
+
+			"log_in": "Zaloguj się",
+			"log_out": "Wyloguj się"
+		},
+		"links":
+		{
+			"add": "Dodaj film",
+			"library": "Biblioteka",
+			"remove": "Usuń film"
+		}
+	},
+	"footer":
+	{
+		"p":
+		{
+			"rights": "2025 &copy Wszelkie prawa zastrzeżone"
+		}
+	}
+}

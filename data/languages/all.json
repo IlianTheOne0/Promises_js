@@ -1,0 +1,8 @@
+{
+	"available":
+	[
+		{ "code": "en", "label": "EN" },
+		{ "code": "ua", "label": "UA" },
+		{ "code": "pl", "label": "PL" }
+	]
+}

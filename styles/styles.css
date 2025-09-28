@@ -1,6 +1,14 @@
-body
+@import "./items/body.css";
+@import "./items/main.css";
+@import "./items/header/header.css";
+@import "./items/footer.css";
+
+.hidden
 {
-	background-color: #3a3a3a;
-	
-	font-family: Arial, sans-serif;
+	display: none;
+}
+
+.visible
+{
+	display: block;
 }

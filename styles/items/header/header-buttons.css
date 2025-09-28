@@ -1,0 +1,72 @@
+#language-button
+{
+	display: flex;
+
+	padding: 10px 20px;
+	
+	background-color: #6a6a6a;
+	color: white;
+
+	border: none;
+
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+#language-button:hover
+{
+	background-color: orange;
+
+	transition: background-color 0.2s ease;
+}
+
+#language-button span
+{
+	user-select: none;
+}
+
+#language-button hr
+{
+	margin: 0 10px;
+
+	border: 1px solid white;
+}
+
+#login-button,
+#logout-button
+{
+	padding: 10px 20px;
+
+	color: white;
+
+	border: none;
+
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+#login-button
+{
+	background-color: #4caf50;
+}
+
+#login-button:hover
+{
+	background-color: #45a049;
+
+	transition: background-color 0.2s ease;
+}
+
+#logout-button
+{
+	background-color: #f44336;
+}
+
+#logout-button:hover
+{
+	background-color: #da190b;
+
+	transition: background-color 0.2s ease;
+}

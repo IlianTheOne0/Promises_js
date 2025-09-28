@@ -3,10 +3,39 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Homework</title>
+	<title></title>
+	<link rel="icon" href="assets/icons/film.svg">
 	<link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
+	<header>
+		<button id="language-button">
+			<span>Language</span>
+			<hr>
+			<span>Language</span>
+		</button>
+
+		<nav>
+			<a href="./pages/add.html"><p>Add</p></a>
+			<a href="./pages/list.html"><p>Library</p></a>
+			<a href="./pages/remove.html"><p>Remove</p></a>
+		</nav>
+		
+		<div class="account-div">
+			<div>
+				<p class="hidden" id="username-p"></p>
+				<p class="hidden" id="email-p"></p>
+				<button class="hidden" id="logout-button">Log out</button>
+			</div>
+
+			<button class="visible" id="login-button">Log in</button>
+		</div>
+	</header>
+
+	<footer>
+		<p>reserved</p>
+	</footer>
+
 	<script type="module" src="./scripts/scripts.js"></script>
 </body>
 </html>
