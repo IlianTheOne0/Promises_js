@@ -1,9 +1,13 @@
 @import "./header-nav.css";
 @import "./header-buttons.css";
+@import "./header-account_div.css";
 
 header
 {
 	width: 100%;
+	
+	position: absolute;
+	top: 0;
 
 	display: flex;
 	justify-content: center;

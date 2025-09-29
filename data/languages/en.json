@@ -15,6 +15,21 @@
 			"remove": "Remove Film"
 		}
 	},
+	"main":
+	{
+		"login":
+		{
+			"login_h1": "Login",
+			"register_h1": "Signin",
+
+			"login": "Login",
+			"password": "Password",
+			"email": "Email",
+			"repeat_password": "Repeat Password",
+
+			"submit_button": "Submit"
+		}
+	},
 	"footer":
 	{
 		"p":

@@ -1,6 +1,7 @@
 @import "./items/body.css";
-@import "./items/main.css";
+
 @import "./items/header/header.css";
+@import "./items/main/main.css";
 @import "./items/footer.css";
 
 .hidden

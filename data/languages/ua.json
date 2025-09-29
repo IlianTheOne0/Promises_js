@@ -15,6 +15,21 @@
 			"remove": "Видалити фільм"
 		}
 	},
+	"main":
+	{
+		"login":
+		{
+			"login_h1": "Увійти",
+			"register_h1": "Зареєструватися",
+
+			"login": "Логін",
+			"password": "Пароль",
+			"email": "Пошта",
+			"repeat_password": "Повторити пароль",
+
+			"submit_button": "Опрацювати дані"
+		}
+	},
 	"footer":
 	{
 		"p":

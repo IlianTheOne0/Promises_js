@@ -2,6 +2,7 @@ export function setupAccountButton(loginService)
 {
   	setupLoginEvents();
   	setupLogoutEvents(loginService);
+  	setupFormEvents(loginService);
 }
 
 function setupLoginEvents()
@@ -12,11 +13,59 @@ function setupLoginEvents()
   	btn.addEventListener
 	(
 		"click",
-		async (e) => { window.location.href = "pages/login.html"; }
+		async (e) => { window.location.href = "login.html"; }
 	);
 }
 
-function setupLogoutEvents(loginManager)
+async function setupFormEvents(loginService)
+{
+	if (!window.location.href.includes("login.html")) { return; }
+	
+	document.getElementById("login-form").addEventListener
+	(
+		"submit",
+		async (e) =>
+		{
+			e.preventDefault();
+
+			const formData = new FormData(e.target);
+
+			const login = formData.get("login_login-input").trim();
+			const password = formData.get("login_password-input").trim();
+
+			if (!login || !password) { alert("Please fill in all fields."); return; }
+
+			try { await loginService.login(login, password); window.location.href = "list.html"; e.target.reset(); }
+			catch (err) { console.error("Login failed:", err); alert("Login error"); }
+		}
+	);
+
+	document.getElementById("register-form").addEventListener
+	(
+		"submit",
+		async (e) =>
+		{
+			e.preventDefault();
+
+			const formData = new FormData(e.target);
+			console.log(e.target);
+			console.log(formData);
+
+			const login = formData.get("register_login-input").trim();
+			const email = formData.get("register_email-input").trim();
+			const password = formData.get("register_password-input").trim();
+			const repeatPassword = formData.get("register_repeat_password-input").trim();
+
+			if (!login || !email || !password || !repeatPassword) { alert("Please fill in all fields."); return; }
+			if (password !== repeatPassword) { alert("Passwords do not match."); return; }
+
+			try { await loginService.register(login, email, password); alert("Registration successful! You can now log in"); e.target.reset(); }
+			catch (err) { console.error("Registration failed:", err); alert("Registration error"); }
+		}
+	);
+}
+
+function setupLogoutEvents(loginService)
 {
   	const btn = window.document.getElementById("logout-button");
   	if (!btn) { return; }
@@ -27,7 +76,7 @@ function setupLogoutEvents(loginManager)
 		async (e) =>
 		{
 	    	e.preventDefault();
-	    	try { await loginService.logout(); }
+	    	try { await loginService.logout(); window.location.href = "index.html"; }
 			catch (err) { console.error("Logout failed:", err); alert("Logout error"); }
 		}
 	);

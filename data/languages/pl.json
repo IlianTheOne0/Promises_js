@@ -18,6 +18,21 @@
 			"remove": "Usuń film"
 		}
 	},
+		"main":
+	{
+		"login":
+		{
+			"login_h1": "Login",
+			"register_h1": "Signin",
+
+			"login": "Login",
+			"password": "Parol",
+			"email": "E-mail",
+			"repeat_password": "Powtórz parol",
+
+			"submit_button": "Przetwarzaj dane"
+		}
+	},
 	"footer":
 	{
 		"p":

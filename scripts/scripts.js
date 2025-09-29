@@ -1,17 +1,20 @@
 import { LoginService } from "./services/loginService.js";
 import { LanguageService } from "./services/languageService.js";
 import { DisplayService } from "./services/displayService.js";
+import { NavigationService } from "./services/navigationService.js";
 
-import { updateLoginDiv } from "./items/login-item.js";
 import { assignEvents } from "./events/assigner.js";
+
+let services = null;
 
 function loadServices()
 {
   	const loginService = new LoginService();
   	const languageService = new LanguageService();
   	const displayService = new DisplayService(languageService);
+	const navigationService = new NavigationService();
 
-  return { loginService, languageService, displayService };
+  	return { loginService, languageService, displayService, navigationService };
 }
 
 async function initializeApp()
@@ -20,9 +23,8 @@ async function initializeApp()
 
   	assignEvents(services);
 
-  	updateLoginDiv(services.loginService);
-
   	await services.languageService.initializeLanguage("en");
+	await services.displayService.updateDisplayLanguage(services.loginService);	
 }
 
 initializeApp();
