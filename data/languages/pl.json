@@ -18,8 +18,16 @@
 			"remove": "Usuń film"
 		}
 	},
-		"main":
+	"main":
 	{
+		"index":
+		{
+			"anon_user": "Serwis nie może funkcjonować bez rejestracji"
+		},
+		"list":
+		{
+			"no_films": "Nic do pokazania"
+		},
 		"login":
 		{
 			"login_h1": "Login",

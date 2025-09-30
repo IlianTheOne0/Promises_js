@@ -36,7 +36,7 @@ async function setupFormEvents(loginService)
 			if (!login || !password) { alert("Please fill in all fields."); return; }
 
 			try { await loginService.login(login, password); window.location.href = "list.html"; e.target.reset(); }
-			catch (err) { console.error("Login failed:", err); alert("Login error"); }
+			catch (e) { console.error("Login failed:", e); alert("Login error: " + e); }
 		}
 	);
 
@@ -60,7 +60,7 @@ async function setupFormEvents(loginService)
 			if (password !== repeatPassword) { alert("Passwords do not match."); return; }
 
 			try { await loginService.register(login, email, password); alert("Registration successful! You can now log in"); e.target.reset(); }
-			catch (err) { console.error("Registration failed:", err); alert("Registration error"); }
+			catch (e) { console.error("Registration failed:", e); alert("Registration error: " + e); }
 		}
 	);
 }
@@ -77,7 +77,7 @@ function setupLogoutEvents(loginService)
 		{
 	    	e.preventDefault();
 	    	try { await loginService.logout(); window.location.href = "index.html"; }
-			catch (err) { console.error("Logout failed:", err); alert("Logout error"); }
+			catch (e) { console.error("Logout failed:", e); alert("Logout error: " + e); }
 		}
 	);
 }

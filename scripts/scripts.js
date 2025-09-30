@@ -19,7 +19,7 @@ function loadServices()
 
 async function initializeApp()
 {
-  	const services = loadServices();
+  	services = loadServices();
 
   	assignEvents(services);
 
@@ -28,3 +28,5 @@ async function initializeApp()
 }
 
 initializeApp();
+
+// console.log(services.loginService.getCurrentUser());

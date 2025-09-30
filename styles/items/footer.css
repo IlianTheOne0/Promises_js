@@ -1,19 +1,15 @@
 footer
 {
-	width: 100%;
+    width: 100%;
 
-	position: absolute;
-	bottom: 0;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	margin-top: 15px;
-	padding: 10px;
-
-	background-color: #858585;
-	color: white;
-	
-	box-shadow: -1px 0px 15px rgb(30, 30, 30);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 10px;
+    
+    background-color: #858585;
+    color: white;
+    
+    box-shadow: -1px 0px 15px rgba(30, 30, 30, 0.6);
 }

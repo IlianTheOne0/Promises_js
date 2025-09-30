@@ -37,11 +37,11 @@ export class LoginService extends ILoginService
 			(resolve, reject) =>
 			{
       			const users = JSON.parse(this.#storage.getItem("users") || "[]");
-				const user = users.find(u => u.username === username && u.password === password);
+				const user = users.find(user => user.username === username && user.password === password);
 				
 				if (user)
 				{
-					this.#currentUser = { username: user.username, email: user.email || null };
+					this.#currentUser = { id: user.id, username: user.username, email: user.email || null };
 					
 					this.#storage.setItem("currentUser", JSON.stringify(this.#currentUser));
 
@@ -61,10 +61,10 @@ export class LoginService extends ILoginService
 			{
 				const users = JSON.parse(this.#storage.getItem("users") || "[]");
 				
-				if (users.find(u => u.username === username)) { reject(new Error("Username already exists")); return; }
-				if (users.find(u => u.email === email)) { reject(new Error("Email already registered")); return; }
+				if (users.find(user => user.username === username)) { reject(new Error("Username already exists")); return; }
+				if (users.find(user => user.email === email)) { reject(new Error("Email already registered")); return; }
 				
-				const newUser = { username, email, password };
+				const newUser = { id: Math.random().toString(36).substr(2, 9), username, email, password };
 				users.push(newUser);
 				
 				this.#storage.setItem("users", JSON.stringify(users));

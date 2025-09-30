@@ -17,6 +17,14 @@
 	},
 	"main":
 	{
+		"index":
+		{
+			"anon_user": "The service cannot work without registration"
+		},
+		"list":
+		{
+			"no_films": "Nothing to show"
+		},
 		"login":
 		{
 			"login_h1": "Login",

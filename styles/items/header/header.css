@@ -4,17 +4,18 @@
 
 header
 {
-	width: 100%;
-	
-	position: absolute;
-	top: 0;
+    width: 100%;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-	padding: 10px;
-
-	background-color: #858585;
-	color: white;
+    padding: 10px;
+    
+    background-color: #858585;
+    color: white;
+    
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    
+    z-index: 10;
 }

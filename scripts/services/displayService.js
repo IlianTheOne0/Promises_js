@@ -1,4 +1,6 @@
 import { LoginService } from "./loginService.js";
+import { NavigationService } from "./navigationService.js";
+import { FilmsService } from "./filmsService.js";
 
 export class IDisplayService
 {
@@ -77,27 +79,69 @@ export class DisplayService extends IDisplayService
 
 	#updateMain(data)
 	{
-		if (window.location.href.includes("login.html"))
+		switch (true)
 		{
-			document.getElementById("login-form").querySelector("h1").textContent = data.main.login.login_h1;
-			document.getElementById("register-form").querySelector("h1").textContent = data.main.login.register_h1;
+			case window.location.href.includes("index.html"):
+			{
+				document.querySelector("main h1").textContent = data.main.index.anon_user;
+			} break;
+			case window.location.href.includes("login.html"):
+			{
+				document.getElementById("login-form").querySelector("h1").textContent = data.main.login.login_h1;
+				document.getElementById("register-form").querySelector("h1").textContent = data.main.login.register_h1;
 
-			document.getElementsByName("login_login-input")[0].previousSibling.textContent = data.main.login.login;
-			document.getElementsByName("login_password-input")[0].previousSibling.textContent = data.main.login.password;
+				document.getElementsByName("login_login-input")[0].previousSibling.textContent = data.main.login.login;
+				document.getElementsByName("login_password-input")[0].previousSibling.textContent = data.main.login.password;
 
-			document.getElementsByName("register_login-input")[0].previousSibling.textContent = data.main.login.login;
-			document.getElementsByName("register_email-input")[0].previousSibling.textContent = data.main.login.email;
-			document.getElementsByName("register_password-input")[0].previousSibling.textContent = data.main.login.password;
-			document.getElementsByName("register_repeat_password-input")[0].previousSibling.textContent = data.main.login.repeat_password;
+				document.getElementsByName("register_login-input")[0].previousSibling.textContent = data.main.login.login;
+				document.getElementsByName("register_email-input")[0].previousSibling.textContent = data.main.login.email;
+				document.getElementsByName("register_password-input")[0].previousSibling.textContent = data.main.login.password;
+				document.getElementsByName("register_repeat_password-input")[0].previousSibling.textContent = data.main.login.repeat_password;
 
-			document.querySelector("#login-form button").textContent = data.main.login.submit_button;
-			document.querySelector("#register-form button").textContent = data.main.login.submit_button;
+				document.querySelector("#login-form button").textContent = data.main.login.submit_button;
+				document.querySelector("#register-form button").textContent = data.main.login.submit_button;
+			} break;
+			case window.location.href.includes("list.html"):
+			{
+				const user = new LoginService().getCurrentUser();
+				if (!user) { window.location.href = "login.html"; return; }
+
+				new FilmsService().getAllFilmsByUserId(user.id)
+				.then
+				(
+					films =>
+					{
+						if (films.length === 0) { document.querySelector("main").innerHTML = `<h1 style="color: white; position: absolute; top: calc(50% - 100px); left: 50%; transform: translate(-50%, -50%);">${data.main.list.no_films}</h1>`; return; }
+						films.forEach(film => this.#addFilmToList(film, new NavigationService()));
+					}	
+				);
+			} break;
 		}
 	}
 
 	#updateFooter(data)
 	{
 		document.querySelector("body footer p").innerHTML = data.footer.p.rights;
+	}
+
+	#addFilmToList(film, navigationService)
+	{
+		const main = document.querySelector("main");
+
+		if (!navigationService.isOn("list.html")) { return; }
+
+		const filmElement = document.createElement("div");
+		filmElement.classList.add("card");
+		filmElement.innerHTML =
+		`
+			<img class="card-img" src="${film.poster || './assets/images/nothingToShow.png'}" alt="Poster: ${film.title}">
+			<h2 class="card-title">${film.title}</h2>
+			<h3 class="card-director">${film.director}</h3>
+			<p class="card-genre">${film.genre}</p>
+			<p class="card-year">${film.year}</p>
+		`;
+
+		main.appendChild(filmElement);
 	}
 
 	async updateDisplayLanguage(object)

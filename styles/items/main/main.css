@@ -1,9 +1,11 @@
 main
 {
-	width: 90%;
-	height: 77.5%;
+    width: 90%;
+    height: auto;
 
-	position: absolute;
-	top: 10%;
-	left: 5%;
+    flex: 1 0 auto;
+    
+    margin: 20px auto;
+    
+    box-sizing: border-box;
 }
