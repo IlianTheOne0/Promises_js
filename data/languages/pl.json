@@ -47,5 +47,17 @@
 		{
 			"rights": "2025 &copy Wszelkie prawa zastrzeżone"
 		}
+	},
+	"errors":
+	{
+		"empty_field": "Proszę wypełnić wszystkie pola",
+		"password_repeat_incorrect": "Parol nie są zgodne",
+
+		"provide_credentials": "Podaj nazwę użytkownika i parol",
+		"invalid_credentials": "Nieprawidłowa nazwa użytkownika lub parol",
+		"username_exists": "Nazwa użytkownika już istnieje",
+		"email_exists": "Adres e-mail jest już zarejestrowany",
+
+		"registration_success": "Rejestracja zakończona sukcesem! Możesz się teraz zalogować"
 	}
 }

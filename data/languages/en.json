@@ -44,5 +44,17 @@
 		{
 			"rights": "2025 &copy All rights reserved"
 		}
+	},
+	"errors":
+	{
+		"empty_field": "Please fill in all fields",
+		"password_repeat_incorrect": "Passwords do not match",
+
+		"provide_credentials": "Provide username and password",
+		"invalid_credentials": "Invalid username or password",
+		"username_exists": "Username already exists",
+		"email_exists": "Email already registered",
+
+		"registration_success": "Registration successful! You can now log in"
 	}
 }

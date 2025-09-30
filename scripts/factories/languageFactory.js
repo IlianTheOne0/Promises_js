@@ -5,8 +5,9 @@ export class LanguageFactory
     	try
 		{
 	      	const response = await fetch(`data/languages/${languageCode}.json`);
-      		if (!response.ok) throw new Error(`Language ${languageCode} not found`);
-      		const data = await response.json();
+      		if (!response.ok) { throw new Error(`Language ${languageCode} not found`); }
+      		
+			const data = await response.json();
       		return new Language(languageCode, data);
     	}
 		catch (e) { console.error("Language load error:", e); return null; }

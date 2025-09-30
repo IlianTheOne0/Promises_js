@@ -1,8 +1,13 @@
-export function setupAccountButton(loginService)
+import { LanguageService } from "../services/languageService.js";
+import { LoginService } from "../services/loginService.js";
+
+import { alert } from "../utils/alerts.js";
+
+export function setupAccountButton()
 {
   	setupLoginEvents();
-  	setupLogoutEvents(loginService);
-  	setupFormEvents(loginService);
+  	setupLogoutEvents();
+  	setupFormEvents();
 }
 
 function setupLoginEvents()
@@ -17,10 +22,12 @@ function setupLoginEvents()
 	);
 }
 
-async function setupFormEvents(loginService)
+async function setupFormEvents()
 {
 	if (!window.location.href.includes("login.html")) { return; }
 	
+	const loginService = new LoginService();
+
 	document.getElementById("login-form").addEventListener
 	(
 		"submit",
@@ -33,10 +40,10 @@ async function setupFormEvents(loginService)
 			const login = formData.get("login_login-input").trim();
 			const password = formData.get("login_password-input").trim();
 
-			if (!login || !password) { alert("Please fill in all fields."); return; }
+			if (!login || !password) { alert("errors.empty_field"); return; }
 
 			try { await loginService.login(login, password); window.location.href = "list.html"; e.target.reset(); }
-			catch (e) { console.error("Login failed:", e); alert("Login error: " + e); }
+			catch (error) { window.alert(error.message); }
 		}
 	);
 
@@ -48,25 +55,25 @@ async function setupFormEvents(loginService)
 			e.preventDefault();
 
 			const formData = new FormData(e.target);
-			console.log(e.target);
-			console.log(formData);
 
 			const login = formData.get("register_login-input").trim();
 			const email = formData.get("register_email-input").trim();
 			const password = formData.get("register_password-input").trim();
 			const repeatPassword = formData.get("register_repeat_password-input").trim();
 
-			if (!login || !email || !password || !repeatPassword) { alert("Please fill in all fields."); return; }
-			if (password !== repeatPassword) { alert("Passwords do not match."); return; }
+			if (!login || !email || !password || !repeatPassword) { alert("errors.empty_field"); return; }
+			if (password !== repeatPassword) { alert("errors.password_repeat_incorrect"); return; }
 
-			try { await loginService.register(login, email, password); alert("Registration successful! You can now log in"); e.target.reset(); }
-			catch (e) { console.error("Registration failed:", e); alert("Registration error: " + e); }
+			try { await loginService.register(login, email, password); alert("errors.registration_success"); e.target.reset(); }
+			catch (error) { alert(error); }
 		}
 	);
 }
 
-function setupLogoutEvents(loginService)
+function setupLogoutEvents()
 {
+	const loginService = new LoginService();
+
   	const btn = window.document.getElementById("logout-button");
   	if (!btn) { return; }
   
@@ -77,7 +84,7 @@ function setupLogoutEvents(loginService)
 		{
 	    	e.preventDefault();
 	    	try { await loginService.logout(); window.location.href = "index.html"; }
-			catch (e) { console.error("Logout failed:", e); alert("Logout error: " + e); }
+			catch (error) { alert("Logout error: " + error); }
 		}
 	);
 }

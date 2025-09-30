@@ -1,74 +1,80 @@
+import { LanguageService } from "./languageService.js";
+
 class IFilmsService
 {
 	addFilm(film) { throw new Error("Method 'addFilm()' is not implemented"); }
 	removeFilm(filmId) { throw new Error("Method 'removeFilm()' is not implemented"); }
-	
 	updateFilm(film) { throw new Error("Method 'updateFilm()' is not implemented"); }
-	
+
 	getAllFilms() { throw new Error("Method 'getAllFilms()' is not implemented"); }
 	getFilmById(filmId) { throw new Error("Method 'getFilmById()' is not implemented"); }
-};
+}
 
 export class FilmsService extends IFilmsService
 {
+	#storage;
+
 	constructor()
 	{
 		if (FilmsService._instance) { return FilmsService._instance; }
 		super();
 		FilmsService._instance = this;
+
+		this.#storage = window.localStorage;
 	}
 
-	async addFilm(film)
+	#getStorage() { return JSON.parse(this.#storage.getItem("films")) || {}; }
+	#setStorage(data) { this.#storage.setItem("films", JSON.stringify(data)); }
+
+	addFilm(userId, film)
 	{
-		fetch
-		(
-			"../data/movies.json",
-			{
-				method: "POST",
-				body: JSON.stringify(film),
-				headers: { "Content-Type": "application/json" }
-			}
-		)
-		.then(response => response.json())
-		.then(data => console.log('Success:', data))
-		.catch(error => console.error('Error:', error));
-	}
-	async removeFilm(filmId)
-	{
-		fetch("../data/movies.json/" + filmId, { method: "DELETE" })
-		.then(response => response.json())
-		.then(data => console.log('Success:', data))
-		.catch(error => console.error('Error:', error));
+		if (!userId || !film || !film.title || !film.director || !film.genre || !film.year) { throw new Error(new LanguageService().translate("errors.empty_field")); }
+
+		const filmsByUser = this.#getStorage();
+		const userFilms = filmsByUser[userId] || [];
+
+		const newFilm =
+		{
+			id: userFilms.length > 0 ? userFilms[userFilms.length - 1].id + 1 : 0,
+			title: film.title,
+			director: film.director,
+			genre: film.genre,
+			year: film.year,
+			poster: film.poster || null,
+		};
+
+		userFilms.push(newFilm);
+		filmsByUser[userId] = userFilms;
+		this.#setStorage(filmsByUser);
 	}
 
-	async updateFilm(film)
+	removeFilm(userId, filmId)
 	{
-		fetch
-		(
-			"../data/movies.json/" + film.id,
-			{
-				method: "PUT",
-				body: JSON.stringify(film),
-				headers: { "Content-Type": "application/json" }
-			}
-		)
-		.then(response => response.json())
-		.then(data => console.log('Success:', data))
-		.catch(error => console.error('Error:', error));
+		const filmsByUser = this.#getStorage();
+		if (!filmsByUser[userId]) { return; }
+
+		filmsByUser[userId] = filmsByUser[userId].filter(film => film.id !== filmId);
+		this.#setStorage(filmsByUser);
 	}
 
-	async getAllFilmsByUserId(userId)
+	updateFilm(userId, film)
 	{
-		const response = await fetch(`../data/movies.json?userId=${userId}`);
-		const data = await response.json();
+		const filmsByUser = this.#getStorage();
+		if (!filmsByUser[userId]) { return; }
 
-		const films = data[userId] ?? [];
-		return films;
+		const index = filmsByUser[userId].findIndex(film => film.id === film.id);
+		if (index !== -1) { filmsByUser[userId][index] = film; this.#setStorage(filmsByUser); }
 	}
-	async getFilmByUserIdAndFilmId(userId, filmId)
+
+	getAllFilmsByUserId(userId)
 	{
-		const response = await fetch(`../data/movies.json/${filmId}?userId=${userId}`);
-		const film = await response.json();
-		return film;
+		const filmsByUser = this.#getStorage();
+		return filmsByUser[userId] ?? [];
+	}
+
+	getFilmByUserIdAndFilmId(userId, filmId)
+	{
+		const films = this.getAllFilmsByUserId(userId);
+		return films.find(film => film.id === filmId);
 	}
 }

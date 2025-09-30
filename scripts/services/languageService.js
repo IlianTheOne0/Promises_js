@@ -7,6 +7,8 @@ export class ILanguageService
 	initializeLanguage() { throw new Error("Method 'initializeLanguage()' is not implemented"); }
 	getCurrentLanguage() { throw new Error("Method 'getCurrentLanguage()' is not implemented"); }
 	setLanguage(language) { throw new Error("Method 'setLanguage()' is not implemented"); }
+
+	translate(valueName) { throw new Error("Method 'translate()' is not implemented"); }
 }
 
 export class LanguageService extends ILanguageService
@@ -19,6 +21,8 @@ export class LanguageService extends ILanguageService
 		if (LanguageService._instance) { return LanguageService._instance; }
 		super();
 		LanguageService._instance = this;
+
+		this.#currentLanguage = localStorage.getItem("language") || "en";
 	}
 
 	subscribe(observer) { this.#observers.push(observer); }
@@ -35,9 +39,33 @@ export class LanguageService extends ILanguageService
 	{
 		const languageObject = await LanguageFactory.create(language);
 		localStorage.setItem("language", language);
-		document.documentElement.lang = language;
-		this.#currentLanguage = language;
+		document.documentElement.lang = languageObject.code;
+		this.#currentLanguage = languageObject.code;
 
 		this.#notifyObservers(languageObject);
+	}
+
+	async translate(valueName)
+	{
+		try
+		{
+			const languageCode = this.getCurrentLanguage() ?? "en";
+
+			const response = await fetch(`data/languages/${languageCode}.json`);
+			if (!response.ok) { throw new Error(`Language ${languageCode} not found`); }
+
+			const data = await response.json();
+
+			const values = valueName.split(".");
+			let result = data;
+			for (const key of values)
+			{
+	  			if (result && key in result) { result = result[key];}
+				else { result = undefined; break; }
+			}
+			
+			return result ?? valueName;
+		}
+		catch (error) { console.error("Error fetching language data:", error); return valueName; }
 	}
 }

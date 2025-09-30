@@ -1,32 +1,23 @@
-import { LoginService } from "./services/loginService.js";
 import { LanguageService } from "./services/languageService.js";
 import { DisplayService } from "./services/displayService.js";
-import { NavigationService } from "./services/navigationService.js";
 
 import { assignEvents } from "./events/assigner.js";
-
-let services = null;
-
-function loadServices()
-{
-  	const loginService = new LoginService();
-  	const languageService = new LanguageService();
-  	const displayService = new DisplayService(languageService);
-	const navigationService = new NavigationService();
-
-  	return { loginService, languageService, displayService, navigationService };
-}
+import { LoginService } from "./services/loginService.js";
 
 async function initializeApp()
 {
-  	services = loadServices();
+  	const languageService = new LanguageService();
+	const displayService = new DisplayService();
 
-  	assignEvents(services);
+  	assignEvents();
 
-  	await services.languageService.initializeLanguage("en");
-	await services.displayService.updateDisplayLanguage(services.loginService);	
+  	await languageService.initializeLanguage("en");
+	await displayService.updateDisplayLanguage(await languageService.getCurrentLanguage());
 }
 
 initializeApp();
 
-// console.log(services.loginService.getCurrentUser());
+// console.log(localStorage.getItem("films"));
+// console.log(new LoginService().getCurrentUser().id);
+
+// localStorage.clear();

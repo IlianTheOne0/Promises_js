@@ -1,6 +1,7 @@
 import { LoginService } from "./loginService.js";
 import { NavigationService } from "./navigationService.js";
 import { FilmsService } from "./filmsService.js";
+import { LanguageService } from "./languageService.js";
 
 export class IDisplayService
 {
@@ -9,17 +10,19 @@ export class IDisplayService
 
 export class DisplayService extends IDisplayService
 {
-	constructor(languageManager)
+	constructor()
 	{
 		if (DisplayService._instance) { return DisplayService._instance; }
 		super();
 		DisplayService._instance = this;
 
-		languageManager.subscribe(this.updateDisplayLanguage.bind(this));
+		new LanguageService().subscribe(this.updateDisplayLanguage.bind(this));
 	}
 
-	#updateAccountDiv(loginService)
+	#updateAccountDiv()
 	{	
+		const loginService = new LoginService();
+
 		const container = window.document.getElementsByClassName("account-div")[0];
 
 		const usernameP = container.querySelector("#username-p");
@@ -106,15 +109,9 @@ export class DisplayService extends IDisplayService
 				const user = new LoginService().getCurrentUser();
 				if (!user) { window.location.href = "login.html"; return; }
 
-				new FilmsService().getAllFilmsByUserId(user.id)
-				.then
-				(
-					films =>
-					{
-						if (films.length === 0) { document.querySelector("main").innerHTML = `<h1 style="color: white; position: absolute; top: calc(50% - 100px); left: 50%; transform: translate(-50%, -50%);">${data.main.list.no_films}</h1>`; return; }
-						films.forEach(film => this.#addFilmToList(film, new NavigationService()));
-					}	
-				);
+				const films = new FilmsService().getAllFilmsByUserId(user.id);
+				films.forEach(film => this.#addFilmToList(film));
+				if (films.length === 0) { document.querySelector("main").innerHTML = `<h1 style="color: white; position: absolute; top: calc(50% - 100px); left: 50%; transform: translate(-50%, -50%);">${data.main.list.no_films}</h1>`; return; }
 			} break;
 		}
 	}
@@ -124,8 +121,10 @@ export class DisplayService extends IDisplayService
 		document.querySelector("body footer p").innerHTML = data.footer.p.rights;
 	}
 
-	#addFilmToList(film, navigationService)
+	#addFilmToList(film)
 	{
+		const navigationService = new NavigationService();
+		
 		const main = document.querySelector("main");
 
 		if (!navigationService.isOn("list.html")) { return; }
@@ -134,7 +133,7 @@ export class DisplayService extends IDisplayService
 		filmElement.classList.add("card");
 		filmElement.innerHTML =
 		`
-			<img class="card-img" src="${film.poster || './assets/images/nothingToShow.png'}" alt="Poster: ${film.title}">
+			<img class="card-img" src="${film.poster || 'https://github.com/IlianTheOne0/Promises_js/blob/hm/task/assets/images/nothingToShow.png?raw=true'}" alt="Poster: ${film.title}">
 			<h2 class="card-title">${film.title}</h2>
 			<h3 class="card-director">${film.director}</h3>
 			<p class="card-genre">${film.genre}</p>

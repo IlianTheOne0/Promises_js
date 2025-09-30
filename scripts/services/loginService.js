@@ -1,3 +1,5 @@
+import { LanguageService } from "./languageService.js";
+
 export class ILoginService
 {
   	async login(username, password) { throw new Error("login() not implemented"); }
@@ -24,17 +26,17 @@ export class LoginService extends ILoginService
     	if (user)
 		{
       		try { this.#currentUser = JSON.parse(user); }
-			catch (e) { this.#currentUser = null; }
+			catch (error) { this.#currentUser = null; }
 		}
     }
 
   	async login(username, password)
 	{
-	    if (!username || !password) { return Promise.reject(new Error("Provide username and password")); }
+	    if (!username || !password) { return Promise.reject(await new Error(new LanguageService().translate("errors.provide_credentials"))); }
 
     	return new Promise
 		(
-			(resolve, reject) =>
+			async (resolve, reject) =>
 			{
       			const users = JSON.parse(this.#storage.getItem("users") || "[]");
 				const user = users.find(user => user.username === username && user.password === password);
@@ -47,24 +49,23 @@ export class LoginService extends ILoginService
 
 					resolve(this.#currentUser);
 				}
-				else { reject(new Error("Invalid username or password")); }
+				else { reject(new Error(await new LanguageService().translate("errors.invalid_credentials"))); }
     		}
 		);
   	}
 	async register(username, email, password)
 	{
-		if (!username || !email || !password) { return Promise.reject(new Error("Provide username, email and password")); }
+		if (!username || !email || !password) { return Promise.reject(new Error(await new LanguageService().translate("errors.provide_credentials"))); }
 
 		return new Promise
 		(
-			(resolve, reject) =>
+			async (resolve, reject) =>
 			{
 				const users = JSON.parse(this.#storage.getItem("users") || "[]");
-				
-				if (users.find(user => user.username === username)) { reject(new Error("Username already exists")); return; }
-				if (users.find(user => user.email === email)) { reject(new Error("Email already registered")); return; }
-				
-				const newUser = { id: Math.random().toString(36).substr(2, 9), username, email, password };
+				if (users.find(user => user.username === username)) { reject("errors.username_exists"); return; }
+				if (users.find(user => user.email === email)) { reject("errors.email_exists"); return; }
+
+				const newUser = { id: crypto.randomUUID(), username, email, password };
 				users.push(newUser);
 				
 				this.#storage.setItem("users", JSON.stringify(users));

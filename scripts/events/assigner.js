@@ -1,25 +1,32 @@
 import { setupAccountButton } from "../events/login-events.js";
 import { setupLanguageButton } from "../events/languages-events.js";
 import { setupLocationEvents } from "../events/location-events.js";
+import { setupAddEvents } from "../events/add-events.js";
 
-export function assignEvents(services)
+export function assignEvents()
 {
-	assignLoginEvents(services.loginService);
-	assignLanguageEvents(services.languageService, services.displayService);
-	assignLocationEvents(services.loginService, services.navigationService);
+	assignLoginEvents();
+	assignLanguageEvents();
+	assignLocationEvents();
+	assignAddEvents();
 }
 
-export function assignLoginEvents(loginService)
+export function assignLoginEvents()
 {
-	setupAccountButton(loginService);
+	setupAccountButton();
 }
 
-export function assignLanguageEvents(languageService, displayService)
+export function assignLanguageEvents()
 {
-	setupLanguageButton(languageService, displayService);
+	setupLanguageButton();
 }
 
-export function assignLocationEvents(loginService, navigationService)
+export function assignLocationEvents()
 {
-	setupLocationEvents(loginService, navigationService);
+	setupLocationEvents();
+}
+
+export function assignAddEvents()
+{
+	setupAddEvents();
 }
