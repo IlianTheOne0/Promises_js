@@ -29,7 +29,9 @@
 		},
 		"list":
 		{
-			"no_films": "Nic do pokazania"
+			"no_films": "Nic do pokazania",
+
+			"delete_button": "Usuń"
 		},
 		"login":
 		{

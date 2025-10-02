@@ -134,7 +134,7 @@ export class DisplayService extends IDisplayService
 				
 				document.getElementById("search-form").querySelector("button[type='submit']").textContent = data.main.search.search;
 				document.getElementById("search-form").querySelector("button[type='reset']").textContent = data.main.search.reset_filter;
-
+				
 				this.updateFilms();
 			} break;
 		}
@@ -145,7 +145,7 @@ export class DisplayService extends IDisplayService
 		document.querySelector("body footer p").innerHTML = data.footer.p.rights;
 	}
 
-	#addFilmToList(film)
+	async #addFilmToList(film)
 	{
 		const navigationService = new NavigationService();
 		
@@ -167,7 +167,7 @@ export class DisplayService extends IDisplayService
 			<h3 class="card-director">${film.director}</h3>
 			<p class="card-genre">${film.genre}</p>
 			<p class="card-year">${film.year}</p>
-			<button class="card-delete-button" data-film-id="${film.id}">Delete</button>
+			<button class="card-delete-button" data-film-id="${film.id}">${await new LanguageService().translate("main.list.delete_button")}</button>
 		`;
 
 		main.appendChild(filmElement);
