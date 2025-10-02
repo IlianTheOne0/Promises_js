@@ -14,8 +14,7 @@
 		"links":
 		{
 			"add": "Dodaj film",
-			"library": "Biblioteka",
-			"remove": "Usuń film"
+			"library": "Biblioteka"
 		}
 	},
 	"main":
@@ -23,6 +22,10 @@
 		"index":
 		{
 			"anon_user": "Serwis nie może funkcjonować bez rejestracji"
+		},
+		"form":
+		{
+			"submit_button": "Przetwarzaj dane"
 		},
 		"list":
 		{
@@ -36,9 +39,27 @@
 			"login": "Login",
 			"password": "Parol",
 			"email": "E-mail",
-			"repeat_password": "Powtórz parol",
+			"repeat_password": "Powtórz parol"
+		},
+		"add":
+		{
+			"title_h1": "Dodać film",
 
-			"submit_button": "Przetwarzaj dane"
+			"title": "Tytuł",
+			"director": "Reżyser",
+			"genre": "Gatunek",
+			"year": "Rok",
+			"poster": "Plakat (url)"
+		},
+		"search":
+		{
+			"title_placeholder": "Tytuł",
+
+			"genre_select": "Gatunek",
+			"year_select": "Rok",
+
+			"reset_filter": "Wyczyść filtr",
+			"search": "Szukaj"
 		}
 	},
 	"footer":
@@ -58,6 +79,9 @@
 		"username_exists": "Nazwa użytkownika już istnieje",
 		"email_exists": "Adres e-mail jest już zarejestrowany",
 
-		"registration_success": "Rejestracja zakończona sukcesem! Możesz się teraz zalogować"
+		"registration_success": "Rejestracja zakończona sukcesem! Możesz się teraz zalogować",
+
+		"invalid_year": "Rok musi być liczbą pomiędzy 1800 a rokiem bieżącym",
+		"invalid_poster_url": "Nieprawidłowy adres URL plakatu"
 	}
 }

@@ -11,8 +11,7 @@
 		"links":
 		{
 			"add": "Add Film",
-			"library": "Library",
-			"remove": "Remove Film"
+			"library": "Library"
 		}
 	},
 	"main":
@@ -20,6 +19,10 @@
 		"index":
 		{
 			"anon_user": "The service cannot work without registration"
+		},
+		"form":
+		{
+			"submit_button": "Submit"
 		},
 		"list":
 		{
@@ -33,9 +36,27 @@
 			"login": "Login",
 			"password": "Password",
 			"email": "Email",
-			"repeat_password": "Repeat Password",
+			"repeat_password": "Repeat Password"
+		},
+		"add":
+		{
+			"title_h1": "Add Film",
 
-			"submit_button": "Submit"
+			"title": "Title",
+			"genre": "Genre",
+			"director": "Director",
+			"year": "Year",
+			"poster": "Poster (url)"
+		},
+		"search":
+		{
+			"title_placeholder": "Title",
+
+			"genre_select": "Genre",
+			"year_select": "Year",
+
+			"reset_filter": "Clear Filter",
+			"search": "Search"
 		}
 	},
 	"footer":
@@ -55,6 +76,9 @@
 		"username_exists": "Username already exists",
 		"email_exists": "Email already registered",
 
-		"registration_success": "Registration successful! You can now log in"
+		"registration_success": "Registration successful! You can now log in",
+
+		"invalid_year": "Year must be a number between 1800 and current year",
+		"invalid_poster_url": "Invalid poster URL"
 	}
 }

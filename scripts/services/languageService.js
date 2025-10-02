@@ -8,7 +8,7 @@ export class ILanguageService
 	getCurrentLanguage() { throw new Error("Method 'getCurrentLanguage()' is not implemented"); }
 	setLanguage(language) { throw new Error("Method 'setLanguage()' is not implemented"); }
 
-	translate(valueName) { throw new Error("Method 'translate()' is not implemented"); }
+	async translate(valueName) { throw new Error("Method 'translate()' is not implemented"); }
 }
 
 export class LanguageService extends ILanguageService
@@ -20,9 +20,8 @@ export class LanguageService extends ILanguageService
 	{
 		if (LanguageService._instance) { return LanguageService._instance; }
 		super();
-		LanguageService._instance = this;
-
 		this.#currentLanguage = localStorage.getItem("language") || "en";
+		LanguageService._instance = this;
 	}
 
 	subscribe(observer) { this.#observers.push(observer); }
@@ -35,6 +34,7 @@ export class LanguageService extends ILanguageService
 		this.#currentLanguage = savedLang;
 	}
 	getCurrentLanguage() { return this.#currentLanguage }
+	getCurrentLanguageObject() { return LanguageFactory.create(this.#currentLanguage); }
 	async setLanguage(language)
 	{
 		const languageObject = await LanguageFactory.create(language);

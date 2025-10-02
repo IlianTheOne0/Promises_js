@@ -1,21 +1,22 @@
 import { NavigationService } from "../services/navigationService.js";
-import { LoginService } from "../services/loginService.js";
+import { AccountService } from "../services/accountService.js";
 
 export function setupLocationEvents()
 {
 	const navigationService = new NavigationService();
-	const loginService = new LoginService();
+	const accountService = new AccountService();
 
   	window.addEventListener
 	(
-		"load", () =>
+		"load",
+		() =>
 		{
 			if (navigationService.isOn("login.html"))
 			{
-				if (loginService.isLoggedIn()) { navigationService.redirectTo("list.html"); return; } return;
+				if (accountService.isLoggedIn()) { navigationService.redirectTo("list.html"); return; } return;
 			}
 
-			if (navigationService.isProtectedPage() && !loginService.isLoggedIn()) { navigationService.redirectTo("login.html"); return; }
+			if (navigationService.isProtectedPage() && !accountService.isLoggedIn()) { navigationService.redirectTo("login.html"); return; }
 		}
   	);
 }

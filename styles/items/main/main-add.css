@@ -27,6 +27,7 @@ main form
 
 main form h1
 {
+	text-align: center;
 	grid-column: span 2;
 }
 
@@ -55,8 +56,6 @@ main form label input
 main form .poster-label
 {
 	grid-column: span 2;
-
-	font-size: 20px;
 }
 
 main form .poster-label input

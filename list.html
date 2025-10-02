@@ -19,7 +19,6 @@
 		<nav>
 			<a href="./add.html"><span>Add</span></a>
 			<a href="./list.html"><span>Library</span></a>
-			<a href="./remove.html"><span>Remove</span></a>
 		</nav>
 		
 		<div class="account-div">
@@ -34,7 +33,24 @@
 	</header>
 
 	<main>
+		<form id="search-form">
+			<input name="title" id="title-input">
 
+			<select name="genre" id="sort_genre-select">
+				<option default value="">Genre</option>
+			</select>
+
+			<select name="year" id="sort_year-select">
+				<option default value="">Year</option>
+			</select>
+
+			<button type="reset" disabled>Reset</button>
+			<button type="submit" disabled>Submit</button>
+		</form>
+
+		<div class="cards-div">
+
+		</div>
 	</main>
 
 	<footer>

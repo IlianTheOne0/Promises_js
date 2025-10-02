@@ -1,5 +1,4 @@
-import { LanguageService } from "../services/languageService.js";
-import { LoginService } from "../services/loginService.js";
+import { AccountService } from "../services/accountService.js";
 
 import { alert } from "../utils/alerts.js";
 
@@ -25,8 +24,8 @@ function setupLoginEvents()
 async function setupFormEvents()
 {
 	if (!window.location.href.includes("login.html")) { return; }
-	
-	const loginService = new LoginService();
+
+	const accountService = new AccountService();
 
 	document.getElementById("login-form").addEventListener
 	(
@@ -42,7 +41,7 @@ async function setupFormEvents()
 
 			if (!login || !password) { alert("errors.empty_field"); return; }
 
-			try { await loginService.login(login, password); window.location.href = "list.html"; e.target.reset(); }
+			try { await accountService.login(login, password); window.location.href = "list.html"; e.target.reset(); }
 			catch (error) { window.alert(error.message); }
 		}
 	);
@@ -64,7 +63,7 @@ async function setupFormEvents()
 			if (!login || !email || !password || !repeatPassword) { alert("errors.empty_field"); return; }
 			if (password !== repeatPassword) { alert("errors.password_repeat_incorrect"); return; }
 
-			try { await loginService.register(login, email, password); alert("errors.registration_success"); e.target.reset(); }
+			try { await accountService.register(login, email, password); alert("errors.registration_success"); e.target.reset(); }
 			catch (error) { alert(error); }
 		}
 	);
@@ -72,7 +71,7 @@ async function setupFormEvents()
 
 function setupLogoutEvents()
 {
-	const loginService = new LoginService();
+	const accountService = new AccountService();
 
   	const btn = window.document.getElementById("logout-button");
   	if (!btn) { return; }
@@ -83,7 +82,7 @@ function setupLogoutEvents()
 		async (e) =>
 		{
 	    	e.preventDefault();
-	    	try { await loginService.logout(); window.location.href = "index.html"; }
+	    	try { await accountService.logout(); window.location.href = "index.html"; }
 			catch (error) { alert("Logout error: " + error); }
 		}
 	);

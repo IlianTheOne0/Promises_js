@@ -6,8 +6,8 @@ class IFilmsService
 	removeFilm(filmId) { throw new Error("Method 'removeFilm()' is not implemented"); }
 	updateFilm(film) { throw new Error("Method 'updateFilm()' is not implemented"); }
 
-	getAllFilms() { throw new Error("Method 'getAllFilms()' is not implemented"); }
-	getFilmById(filmId) { throw new Error("Method 'getFilmById()' is not implemented"); }
+	getAllFilmsByUserId(userId) { throw new Error("Method 'getAllFilms()' is not implemented"); }
+	getFilmByUserIdAndFilmId(userId, filmId) { throw new Error("Method 'getFilmById()' is not implemented"); }
 }
 
 export class FilmsService extends IFilmsService
@@ -69,12 +69,13 @@ export class FilmsService extends IFilmsService
 	getAllFilmsByUserId(userId)
 	{
 		const filmsByUser = this.#getStorage();
-		return filmsByUser[userId] ?? [];
+		if (!filmsByUser[userId] || filmsByUser[userId].length === 0) { return []; }
+		return [...filmsByUser[userId]] ?? [];
 	}
 
 	getFilmByUserIdAndFilmId(userId, filmId)
 	{
 		const films = this.getAllFilmsByUserId(userId);
-		return films.find(film => film.id === filmId);
+		return [...films].find(film => film.id === filmId) ?? [];
 	}
 }

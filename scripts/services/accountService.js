@@ -1,6 +1,6 @@
 import { LanguageService } from "./languageService.js";
 
-export class ILoginService
+export class IAccountService
 {
   	async login(username, password) { throw new Error("login() not implemented"); }
 	async register(username, email, password) { throw new Error("register() not implemented"); }
@@ -10,16 +10,16 @@ export class ILoginService
   	getCurrentUser() { throw new Error("getCurrentUser() not implemented"); }
 }
 
-export class LoginService extends ILoginService
+export class AccountService extends IAccountService
 {
   	#currentUser = null;
   	#storage;
 
   	constructor()
 	{
-		if (LoginService.instance) { return LoginService.instance; }
+		if (AccountService.instance) { return AccountService.instance; }
 		super();
-		LoginService.instance = this;
+		AccountService.instance = this;
 
     	this.#storage = window.localStorage;
     	const user = this.#storage.getItem("currentUser");

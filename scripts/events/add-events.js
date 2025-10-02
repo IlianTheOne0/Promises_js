@@ -1,5 +1,5 @@
 import { FilmsService } from "../services/filmsService.js";
-import { LoginService } from "../services/loginService.js";
+import { AccountService } from "../services/accountService.js";
 
 import { alert } from "../utils/alerts.js";
 
@@ -8,7 +8,7 @@ export function setupAddEvents()
 	if (!window.location.href.includes("add.html")) { return; }
 	
 	const filmsService = new FilmsService();
-	const loginService = new LoginService();
+	const accountService = new AccountService();
 
 	document.getElementById("addFilm-form").addEventListener
 	(
@@ -26,8 +26,10 @@ export function setupAddEvents()
 			const poster = formData.get("addFilm_poster-input").trim();
 
 			if (!title || !director || !genre || !year) { alert("errors.empty_field"); return; }
+			if (isNaN(Number(year)) || Number(year) < 1800 || Number(year) > new Date().getFullYear()) { alert("errors.invalid_year"); return; }
+			if (poster && !/^https?:\/\/.+\..+/.test(poster)) { alert("errors.invalid_poster_url"); return; }
 
-			try { await filmsService.addFilm(loginService.getCurrentUser().id, { title, director, genre, year, poster }); window.location.href = "list.html"; e.target.reset(); }
+			try { await filmsService.addFilm(accountService.getCurrentUser().id, { title, director, genre, year, poster }); window.location.href = "list.html"; e.target.reset(); }
 			catch (error) { window.alert(error.message); }
 		}
 	);

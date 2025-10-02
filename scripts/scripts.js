@@ -1,8 +1,8 @@
 import { LanguageService } from "./services/languageService.js";
 import { DisplayService } from "./services/displayService.js";
+import { AccountService } from "./services/accountService.js";
 
 import { assignEvents } from "./events/assigner.js";
-import { LoginService } from "./services/loginService.js";
 
 async function initializeApp()
 {
@@ -12,12 +12,7 @@ async function initializeApp()
   	assignEvents();
 
   	await languageService.initializeLanguage("en");
-	await displayService.updateDisplayLanguage(await languageService.getCurrentLanguage());
+	await displayService.updateDisplay(await languageService.getCurrentLanguage());
 }
 
 initializeApp();
-
-// console.log(localStorage.getItem("films"));
-// console.log(new LoginService().getCurrentUser().id);
-
-// localStorage.clear();
