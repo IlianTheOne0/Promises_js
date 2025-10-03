@@ -7,7 +7,7 @@ export async function setupListEvents()
 {
 	setupButtons();
 	await setupGenreSelect();
-	await setupYearSelect();
+	await setupOrderSelect();
 }
 
 function setupButtons()
@@ -53,7 +53,7 @@ function setupButtons()
 			displayService.updateFilms();
 
 			await setupGenreSelect();
-			await setupYearSelect();
+			await setupOrderSelect();
 		}
 	);
 }
@@ -76,22 +76,18 @@ async function setupGenreSelect()
 	genreSelect.addEventListener("change", () => changeButtonsState());
 }
 
-async function setupYearSelect()
+async function setupOrderSelect()
 {
-	const yearSelect = document.getElementById("sort_year-select");
-	if (!yearSelect) { return; }
-
-	const films = new FilmsService().getAllFilmsByUserId(new AccountService().getCurrentUser().id);
-	const years = [];
-	films.forEach(film => { if (!years.includes(film.year)) { years.push(film.year); } });
-	years.sort();
+	const orderSelect = document.getElementById("sort_order-select");
+	if (!orderSelect) { return; }
 
 	const languageService = new LanguageService();
-	yearSelect.innerHTML = `<option value="">${await languageService.translate("main.search.year_select")}</option>`;
-	years.forEach(year => yearSelect.innerHTML += `<option value="${year}">${year}</option>`);
+	orderSelect.innerHTML = `<option value="">${await languageService.translate("main.search.order_select")}</option>`;
+	orderSelect.innerHTML += `<option value="false">${await languageService.translate("main.search.order_select_descending")}</option>`;
+	orderSelect.innerHTML += `<option value="true">${await languageService.translate("main.search.order_select_ascending")}</option>`;
 
-	if (setupYearSelect.initialized) { return; }
-	yearSelect.addEventListener("change", () => changeButtonsState());
+	if (setupOrderSelect.initialized) { return; }
+	orderSelect.addEventListener("change", () => changeButtonsState());
 }
 
 async function processSearch(target)
@@ -101,7 +97,7 @@ async function processSearch(target)
 
 	const input = formData.get("title")?.toString().toLowerCase() ?? "";
 	const genre = formData.get("genre")?.toString().toLowerCase() ?? "";
-	const year = formData.get("year")?.toString() ?? "";
+	const order = formData.get("order")?.toString() ?? "";
 
 	const filmsService = new FilmsService();
 	const displayService = new DisplayService();
@@ -110,8 +106,10 @@ async function processSearch(target)
 	
 	if (input.length > 0) { films = films.filter(film => film.title.toLowerCase().includes(input)); }
 	if (genre.length > 0) { films = films.filter(film => film.genre.toLowerCase() === genre); }
-	if (year.length > 0) { films = films.filter(film => film.year.toString() === year); }
-	
+
+	if (order.valueOf() === "true") { films.sort((a, b) => a.year - b.year); }
+	else if (order.valueOf() === "false") { films.sort((a, b) => b.year - a.year); }
+
 	displayService.films = films;
 	await displayService.updateFilms();
 }
@@ -124,13 +122,13 @@ async function processReset()
 	const genreSelect = document.getElementById("sort_genre-select");
 	if (!genreSelect) { return; }
 
-	const yearSelect = document.getElementById("sort_year-select");
-	if (!yearSelect) { return; }
+	const orderSelect = document.getElementById("sort_order-select");
+	if (!orderSelect) { return; }
 
 	titleInput.value = "";
 	genreSelect.selectedIndex = 0;
-	yearSelect.selectedIndex = 0;
-	
+	orderSelect.selectedIndex = 0;
+
 	changeButtonsState();
 
 	const displayService = new DisplayService();
@@ -150,16 +148,16 @@ function changeButtonsState()
 	const genreSelect = document.getElementById("sort_genre-select");
 	if (!genreSelect) { return; }
 
-	const yearSelect = document.getElementById("sort_year-select");
-	if (!yearSelect) { return; }
-	
+	const orderSelect = document.getElementById("sort_order-select");
+	if (!orderSelect) { return; }
+
 	const submitButton = searchForm.querySelector("button[type='submit']");
 	if (!submitButton) { return; }
 
 	const resetButton = searchForm.querySelector("button[type='reset']");
 	if (!resetButton) { return; }
 
-	if (titleInput.value.length === 0 && genreSelect.selectedIndex === 0 && yearSelect.selectedIndex === 0)
+	if (titleInput.value.length === 0 && genreSelect.selectedIndex === 0 && orderSelect.selectedIndex === 0)
 	{
 		submitButton.disabled = true;
 		resetButton.disabled = true;

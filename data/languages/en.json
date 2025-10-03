@@ -55,7 +55,10 @@
 			"title_placeholder": "Title",
 
 			"genre_select": "Genre",
-			"year_select": "Year",
+			
+			"order_select": "Order",
+			"order_select_descending": "Descending",
+			"order_select_ascending": "Ascending",
 
 			"reset_filter": "Clear Filter",
 			"search": "Search"

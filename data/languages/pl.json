@@ -58,7 +58,10 @@
 			"title_placeholder": "Tytuł",
 
 			"genre_select": "Gatunek",
-			"year_select": "Rok",
+
+			"order_select": "Kolejność",
+			"order_select_descending": "Zstępujący",
+			"order_select_ascending": "Rosnąco",
 
 			"reset_filter": "Wyczyść filtr",
 			"search": "Szukaj"

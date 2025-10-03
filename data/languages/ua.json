@@ -55,7 +55,10 @@
 			"title_placeholder": "Назва",
 
 			"genre_select": "Жанр",
-			"year_select": "Рік",
+
+			"order_select": "Порядок",
+			"order_select_descending": "Спадання",
+			"order_select_ascending": "Зростання",
 
 			"reset_filter": "Очистити фільтр",
 			"search": "Шукати"

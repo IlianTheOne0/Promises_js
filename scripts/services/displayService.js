@@ -130,8 +130,15 @@ export class DisplayService extends IDisplayService
 				document.getElementById("title-input").placeholder = data.main.search.title_placeholder;
 
 				document.getElementById("sort_genre-select").options[0].textContent = data.main.search.genre_select;
-				document.getElementById("sort_year-select").options[0].textContent = data.main.search.year_select;
 				
+				const orderSelect = document.getElementById("sort_order-select");
+				if (orderSelect && data.main.search)
+				{
+					orderSelect.options[0] && (orderSelect.options[0].textContent = data.main.search.order_select ?? orderSelect.options[0].textContent);
+					orderSelect.options[1] && (orderSelect.options[1].textContent = data.main.search.order_select_descending ?? orderSelect.options[1].textContent);
+					orderSelect.options[2] && (orderSelect.options[2].textContent = data.main.search.order_select_ascending ?? orderSelect.options[2].textContent);
+				}
+
 				document.getElementById("search-form").querySelector("button[type='submit']").textContent = data.main.search.search;
 				document.getElementById("search-form").querySelector("button[type='reset']").textContent = data.main.search.reset_filter;
 				
@@ -156,10 +163,6 @@ export class DisplayService extends IDisplayService
 		const filmElement = document.createElement("div");
 		filmElement.classList.add("card");
 
-		const img = new Image();
-		img.src = film.poster;
-		img.onerror = () => { filmElement.querySelector(".card-img").src = 'https://github.com/IlianTheOne0/Promises_js/blob/hm/task/assets/images/nothingToShow.png?raw=true'; }
-
 		filmElement.innerHTML =
 		`
 			<img class="card-img" src="${film.poster}" alt="Poster: ${film.title}">
@@ -169,6 +172,10 @@ export class DisplayService extends IDisplayService
 			<p class="card-year">${film.year}</p>
 			<button class="card-delete-button" data-film-id="${film.id}">${await new LanguageService().translate("main.list.delete_button")}</button>
 		`;
+
+		const imgElement = filmElement.querySelector(".card-img");
+		imgElement.onerror = () => { imgElement.src = 'https://github.com/IlianTheOne0/Promises_js/blob/hm/task/assets/images/nothingToShow.png?raw=true'; };
+		imgElement.src = film.poster;
 
 		main.appendChild(filmElement);
 	}
